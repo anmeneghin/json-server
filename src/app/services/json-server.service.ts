@@ -21,7 +21,7 @@ export interface Item {
   responsavel?: string;
 }
 
-export class StylesPagina extends Pagina {
+export class ItensPagina extends Pagina {
   itens: Item[];
 
   constructor(itens: Item[], pagina: number, porPagina: number, totalItens: number) {
@@ -44,7 +44,7 @@ export class JsonServerService {
     private httpService: HttpClient
   ) { }
 
-  listarItensPaginados(filtro: string, page: number, perPage: number, nomeColuna: string, ordem: string): Observable<StylesPagina> {
+  listarItensPaginados(filtro: string, page: number, perPage: number, nomeColuna: string, ordem: string): Observable<ItensPagina> {
     const url = this.API + '/?_page=' + page + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&nome_like=' + filtro;
 
     return this.httpService.get<Item[]>(
@@ -60,7 +60,7 @@ export class JsonServerService {
       .pipe(
         map((res) => {
           const countHeader: string = res.headers.get('x-total-count') ?? '0';
-          return new StylesPagina(res.body ?? [], page, perPage, +countHeader);
+          return new ItensPagina(res.body ?? [], page, perPage, +countHeader);
         })
       );
   }
