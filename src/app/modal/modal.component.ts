@@ -118,7 +118,7 @@ export class ModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const novaItem: Item = this.itemForm.value as Item;
+    const novoItem: Item = this.itemForm.value as Item;
 
     if (this.action === 'Editar') {
 
@@ -127,7 +127,7 @@ export class ModalComponent implements OnInit {
 
       this.subscriptions.push(
         this.jsonServerService
-          .editarItem(this.obj, novaItem)
+          .editarItem(this.obj, novoItem)
           .pipe(
             tap(
               () => {
@@ -139,19 +139,17 @@ export class ModalComponent implements OnInit {
                 }, 1000);
               }
             ),
-            tap(
-              () => this.mostrarAlert(this.msgError, true, 'danger')
-            )
+            tap(() => this.mostrarAlert(this.msgSuccess, true, 'success'))
           )
           .subscribe()
       );
     } else if (this.action === 'Cadastrar') {
-      this.msgSuccess = 'Item criada com sucesso!';
+      this.msgSuccess = 'Item criado com sucesso!';
       this.msgError = 'Erro ao criar item, tente novamente!';
 
       this.subscriptions.push(
         this.jsonServerService
-          .adicionarItem(novaItem)
+          .adicionarItem(novoItem)
           .pipe(
             tap(
               () => {
@@ -205,22 +203,6 @@ export class ModalComponent implements OnInit {
     this.document.body.classList.remove('overflow');
   }
 
-  openDropdownFunction(event: any) {
-    if (event.target.click && this.openDropdown === false) {
-      this.openDropdown = true;
-    } else {
-      this.openDropdown = false;
-    }
-  }
-  writeValue(value: string) {
-    this.selectedOption = value;
-  }
-
-  changeSelectedOption(option: any) {
-    this.selectedOption = '<i class="' + option.prioridadeCor + ' fas fa-circle"></i>&nbsp' + option.nomeCor;
-    this.itemForm.controls['prioridadeCor'].setValue(option);
-    this.openDropdown = false;
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
