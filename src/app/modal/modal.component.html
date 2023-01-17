@@ -1,0 +1,136 @@
+<div class="modal-backdrop fade show">
+</div>
+<div class="modal fade show" #modalId>
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="fa-stack fa-1x">
+                    <i [ngClass]="action === 'Excluir' ? 'circle-header-danger' : 'circle-primary'"
+                        class="fas fa-circle fa-stack-2x icon-header"></i>
+                    <i *ngIf="action === 'Excluir'" [ngClass]="icon" class="icone-danger fa-stack-1x fa-inverse"></i>
+                    <i *ngIf="action !== 'Excluir'" [ngClass]="icon" class="icone-primary fa-stack-1x fa-inverse"></i>
+                </span>
+                <h5 class="modal-title ml-1" id="modal-basic-title">
+                    {{ action }}
+                </h5>
+                <a type="button" class="close" aria-label="Close" (click)="closeModal(false)">
+                    <span aria-hidden="true">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
+            </div>
+            <!-- Form Cadastrar e Editar -->
+            <form id="crud-modal" class="mt-0" [formGroup]="itemForm" (ngSubmit)="onSubmit()"
+                *ngIf="this.action === 'Editar' || this.action === 'Cadastrar'">
+                <div class="modal-body">
+                    <div class="form-row card-body p-0">
+                        <div class="form-group col-md-12 pb-3">
+                            <input type="hidden" formControlName="id" />
+                            <!-- text area for task title -->
+                            <label>
+                                <b>Nome</b>
+                            </label>
+                            <textarea data-cy="titulo" name="nome" id="editorNome" class="form-control textArea"
+                                cols="1" rows="1" placeholder="Ex.: Revisar Indicadores" required uppercase
+                                formControlName="nome" maxlength="40">
+                            </textarea>
+                            <label class="contagemCaractere">
+                                Caracteres Restantes: {{ 40 - nome.value.length }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row card-body p-0">
+                        <div class="form-group col-md-12 pb-3">
+                            <!-- text area for task title -->
+                            <label>
+                                <b>Descrição</b>
+                            </label>
+                            <textarea data-cy="titulo" name="descricao" id="editorNome" class="form-control textArea"
+                                cols="1" rows="1" placeholder="Ex.: Revisar Indicadores" required uppercase
+                                formControlName="descricao" maxlength="40">
+                            </textarea>
+                            <label class="contagemCaractere">
+                                Caracteres Restantes: {{ 40 - descricao.value.length }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row card-body p-0">
+                        <div class="form-group col-md-4">
+                            <label class="label-modal-tarefas">
+                                <b>Data</b>
+                            </label>
+                            <br>
+                            <div class="date-picker">
+                                <input type="date" required class="form-control date-modal" placeholder="dd-mm-yyyy"
+                                    formControlName="data" data-cy="data" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <!-- text area for task title -->
+                            <label>
+                                <b>Status</b>
+                            </label>
+                            <textarea data-cy="titulo" name="status" id="editorNome" class="form-control textArea"
+                                cols="1" rows="1" placeholder="Ex.: Revisar Indicadores" required uppercase
+                                formControlName="status" maxlength="40">
+                            </textarea>
+                            <label class="contagemCaractere">
+                                Caracteres Restantes: {{ 40 - status.value.length }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row card-body p-0">
+                        <div class="form-group col-md-12 pb-3">
+                            <!-- text area for task title -->
+                            <label>
+                                <b>Responsável</b>
+                            </label>
+                            <textarea data-cy="titulo" name="responsavel" id="editorNome" class="form-control textArea"
+                                cols="1" rows="1" placeholder="Ex.: Revisar Indicadores" required uppercase
+                                formControlName="responsavel" maxlength="40">
+                            </textarea>
+                            <label class="contagemCaractere">
+                                Caracteres Restantes: {{ 40 - responsavel.value.length }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="closeModal(false)" class="btn btn-outline-primary">
+                        Cancelar
+                    </button>
+                    <button data-cy="submit" [disabled]="!itemForm.valid" mat-button type="submit"
+                        class="btn btn-primary btnSubmit">
+                        {{ action }}
+                    </button>
+                </div>
+            </form>
+            <!-- Excluír -->
+            <div *ngIf="action === 'Excluir'" class="modal-conteudo">
+                <div class="modal-body text-center">
+                    <span>
+                        Tem certeza que deseja excluír o item "
+                        <b>{{ obj.nome }}</b>?
+                        <br><br>
+                        Obs.: Esse item será excluído permanentemente.
+                        "
+                    </span>
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="closeModal(false)" class="btn btn-outline-danger">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-danger btnSubmit" (click)="excluirItem()" mat-button type="submit"
+                        data-cy="inativar-botao">
+                        Excluír
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-alert-modal *ngIf="abrirAlert === true" [open]="abrirAlert" [mensagem]="msg" [tipoAlert]="tipoAlert"
+    (closeAlert)="abrirAlert=$event"></app-alert-modal>

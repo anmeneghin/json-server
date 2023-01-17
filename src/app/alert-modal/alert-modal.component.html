@@ -1,0 +1,18 @@
+<div class="overlay">
+</div>
+<div class="modal fade show alert">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="alert alert-{{ tipoAlert }} no-margin fade show" role="alert">
+                <div class="modal-alert">
+                    {{ mensagem }}
+                    <a type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="fecharModal(false)">
+                        <i class="far fa-times-circle"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,33 @@
+.no-margin {
+    margin-bottom: 0;
+}
+
+.modal-alert {
+    display: flex;
+    justify-content: space-between;
+    a {
+        i {
+            color: #000;
+            text-decoration: none;
+        }
+    }
+}
+
+.overlay {
+    background: #000;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+}
+
+.show {
+    display: block !important;
+}
+
+.alert {
+    z-index: 999999;
+}
