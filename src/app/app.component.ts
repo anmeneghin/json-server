@@ -127,8 +127,8 @@ export class AppComponent {
   reload(page: number): void {
     this.currentPage = page;
 
-    this.jsonServerService.listarItensPaginados(this.filtro, this.currentPage, this.perPage, this.sortParams.type, this.sortParams.orientation)
-      .subscribe(pag => {
+    this.jsonServerService.listarItensPaginados(this.filtro, this.currentPage, this.perPage, this.sortParams.type, this.sortParams.orientation, 'nome')
+      .subscribe((pag: any) => {
         this.itens = pag.itens;
 
         this.itensPagina = this.paginacaoService.createPager(pag);

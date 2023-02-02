@@ -8,9 +8,10 @@ export class ArrayFiltroPipe implements PipeTransform {
     if (filtro) {
       filtro = filtro.toUpperCase();
       return value.filter(a =>
-        a.email.toUpperCase().indexOf(filtro) >= 0 ||
-        a.cargo.toUpperCase().indexOf(filtro) >= 0 ||
-        a.departamento.toUpperCase().indexOf(filtro) >= 0
+        a.nome.toUpperCase().indexOf(filtro) >= 0 ||
+        a.descricao.toUpperCase().indexOf(filtro) >= 0 ||
+        a.status.toUpperCase().indexOf(filtro) >= 0 ||
+        a.responsavel.toUpperCase().indexOf(filtro) >= 0
       );
 
 

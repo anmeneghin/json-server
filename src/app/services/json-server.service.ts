@@ -44,8 +44,9 @@ export class JsonServerService {
     private httpService: HttpClient
   ) { }
 
-  listarItensPaginados(filtro: string, page: number, perPage: number, nomeColuna: string, ordem: string): Observable<ItensPagina> {
-    const url = this.API + '/?_page=' + page + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&nome_like=' + filtro;
+  listarItensPaginados(filtro: string, page: number, perPage: number, nomeColuna: string, ordem: string, attFiltro: string): Observable<ItensPagina> {
+
+    const url = this.API + '/?_page=' + page + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&' + attFiltro + '_like=' + filtro;
 
     return this.httpService.get<Item[]>(
       url,
@@ -59,8 +60,13 @@ export class JsonServerService {
     )
       .pipe(
         map((res) => {
+          //this.listarItensPaginados(filtro, page, perPage, nomeColuna, ordem, 'descricao')
+
+
           const countHeader: string = res.headers.get('x-total-count') ?? '0';
+
           return new ItensPagina(res.body ?? [], page, perPage, +countHeader);
+
         })
       );
   }
