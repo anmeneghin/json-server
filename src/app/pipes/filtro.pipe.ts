@@ -10,6 +10,7 @@ export class ArrayFiltroPipe implements PipeTransform {
       return value.filter(a =>
         a.nome.toUpperCase().indexOf(filtro) >= 0 ||
         a.descricao.toUpperCase().indexOf(filtro) >= 0 ||
+        a.data.toString().indexOf(filtro) >= 0 ||
         a.status.toUpperCase().indexOf(filtro) >= 0 ||
         a.responsavel.toUpperCase().indexOf(filtro) >= 0
       );
