@@ -1,6 +1,6 @@
 const jsonServer = require('json-server');
 const server = jsonServer.create();
-// const router = jsonServer.router('server/db.json');
+const router = jsonServer.router('server/db.json');
 const middlewares = jsonServer.defaults();
 const db = require('./db.json');
 const fs = require('fs');
@@ -13,21 +13,32 @@ server.use(middlewares)
 server.get('/itens', (req, res) => {
   let ret = [];
 
-  res.jsonp({
-    body: res.data
-  })
+  // res.jsonp(req.query)
+  // res.jsonp(db.itens)
+  // console.log(req.query)
 
-  db.map(
+  db.itens.map(
     (item) => {
+
+      console.log(item)
+
       if (item.nome == req.query.nome_like) {
+        ret.push(item)
+      } else {
+        delete req.query.nome_like
+        Object.assign(req.query, { descricao_like: item.descricao });
         ret.push(item)
       }
     }
   )
 
-  // console.log(db);
-  console.log(req.query)
+  console.log(ret);
+
   res.jsonp(ret)
+
+
+
+
 })
 
 // To handle POST, PUT and PATCH you need to use a body-parser
