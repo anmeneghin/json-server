@@ -129,6 +129,7 @@ export class AppComponent {
 
     this.jsonServerService.listarItensPaginados(this.filtro, this.currentPage, this.perPage, this.sortParams.type, this.sortParams.orientation, 'nome')
       .subscribe((pag: any) => {
+        console.log(pag)
         this.itens = pag.itens;
 
         this.itensPagina = this.paginacaoService.createPager(pag);

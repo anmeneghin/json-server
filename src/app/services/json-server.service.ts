@@ -12,6 +12,11 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Pagina } from './paginacao.service';
 
 
+export interface Response {
+  totalCount: number;
+  result?: Item[];
+}
+
 export interface Item {
   id?: number;
   nome?: string;
@@ -20,6 +25,7 @@ export interface Item {
   status?: string;
   responsavel?: string;
 }
+
 
 export class ItensPagina extends Pagina {
   itens: Item[];
@@ -47,7 +53,7 @@ export class JsonServerService {
 
     const url = this.API + '/?_page=' + page + '&_start=1' + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&' + attFiltro + '_like=' + filtro;
 
-    return this.httpService.get<Item[]>(
+    return this.httpService.get<Response>(
       url,
       {
         observe: 'response',
@@ -60,12 +66,7 @@ export class JsonServerService {
       .pipe(
         tap(res => console.log(res)),
         map((res) => {
-          //this.listarItensPaginados(filtro, page, perPage, nomeColuna, ordem, 'descricao')
-
-          const countHeader: string = res.headers.get('x-total-count') ?? '0';
-
-          return new ItensPagina(res.body ?? [], page, perPage, +countHeader);
-
+          return new ItensPagina(res.body!.result ?? [], page, perPage, res.body!.totalCount);
         })
       );
   }

@@ -71,9 +71,12 @@ server.get('/itens', (req, res) => {
   const offset = req.query._limit * (req.query._page - 1);
   const arraySlice = ret.slice(offset, req.query._page * req.query._limit);
 
-  console.log(req.query);
+  const newData = {
+    totalCount: db.itens.length,
+    result: arraySlice
+  }
 
-  res.jsonp(arraySlice)
+  res.jsonp(newData)
 })
 
 // To handle POST, PUT and PATCH you need to use a body-parser
