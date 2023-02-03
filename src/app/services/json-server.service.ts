@@ -71,24 +71,6 @@ export class JsonServerService {
       );
   }
 
-  listarItens(): Observable<Item[]> {
-    return this.httpService.get<Item[]>(
-      this.API,
-      {
-        observe: 'response',
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        }),
-      }
-    )
-      .pipe(
-        map((res) => {
-          return res.body ?? [];
-        })
-      );
-
-  }
 
   obterItem(id: any): Observable<Item> {
     return this.httpService
