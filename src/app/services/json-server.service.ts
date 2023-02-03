@@ -45,7 +45,7 @@ export class JsonServerService {
 
   listarItensPaginados(filtro: string, page: number, perPage: number, nomeColuna: string, ordem: string, attFiltro: string): Observable<ItensPagina> {
 
-    const url = this.API + '/?_page=' + page + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&' + attFiltro + '_like=' + filtro;
+    const url = this.API + '/?_page=' + page + '&_start=1' + '&_limit=' + perPage + '&_sort=' + nomeColuna + '&_order=' + ordem + '&' + attFiltro + '_like=' + filtro;
 
     return this.httpService.get<Item[]>(
       url,

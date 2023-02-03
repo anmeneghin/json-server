@@ -14,6 +14,7 @@ server.get('/itens', (req, res) => {
   let ret = [];
   let ordem = '';
 
+
   // ORDENAÇÃO
   const sort_by = (field, reverse, primer) => {
     const key = primer ?
@@ -38,7 +39,6 @@ server.get('/itens', (req, res) => {
   }
 
   db.itens.sort(sort_by(req.query._sort, ordem));
-
 
   // FILTRO
   db.itens.map(
@@ -67,9 +67,13 @@ server.get('/itens', (req, res) => {
     }
   )
 
+  // LIMITE POR PAGINA
+  const offset = req.query._limit * (req.query._page - 1);
+  const arraySlice = ret.slice(offset, req.query._page * req.query._limit);
+
   console.log(req.query);
 
-  res.jsonp(ret)
+  res.jsonp(arraySlice)
 })
 
 // To handle POST, PUT and PATCH you need to use a body-parser
