@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { Pagina } from './paginacao.service';
 
@@ -29,7 +29,6 @@ export class ItensPagina extends Pagina {
     this.itens = itens ?? [];
   }
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -59,9 +58,9 @@ export class JsonServerService {
       }
     )
       .pipe(
+        tap(res => console.log(res)),
         map((res) => {
           //this.listarItensPaginados(filtro, page, perPage, nomeColuna, ordem, 'descricao')
-
 
           const countHeader: string = res.headers.get('x-total-count') ?? '0';
 
