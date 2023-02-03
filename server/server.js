@@ -12,11 +12,35 @@ server.use(middlewares)
 // Add custom routes before JSON Server router
 server.get('/itens', (req, res) => {
   let ret = [];
+  let ordem = '';
 
-  // res.jsonp(req.query)
-  // res.jsonp(db.itens)
-  // console.log(req.query)
+  // ORDENAÇÃO
+  const sort_by = (field, reverse, primer) => {
+    const key = primer ?
+      function (x) {
+        return primer(x[field]);
+      } :
+      function (x) {
+        return x[field];
+      };
 
+    reverse = !reverse ? 1 : -1;
+
+    return function (a, b) {
+      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    };
+  };
+
+  if (req.query._order === 'desc') {
+    ordem = true;
+  } else {
+    ordem = false;
+  }
+
+  db.itens.sort(sort_by(req.query._sort, ordem));
+
+
+  // FILTRO
   db.itens.map(
     (item) => {
       console.log(item)
@@ -40,12 +64,11 @@ server.get('/itens', (req, res) => {
         Object.assign(req.query, { data_like: item.data });
         ret.push(item)
       }
-
-
     }
   )
 
   console.log(req.query);
+
   res.jsonp(ret)
 })
 
