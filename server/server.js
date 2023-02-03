@@ -48,19 +48,19 @@ server.get('/itens', (req, res) => {
         ret.push(item)
       } else if (item.nome !== req.query.nome_like) {
         delete req.query.nome_like
-        Object.assign(req.query, { descricao_like: item.descricao });
+        Object.assign(req.query, { descricao_like: '' });
         ret.push(item)
       } else if (item.descricao !== req.query.descricao_like) {
         delete req.query.descricao_like
-        Object.assign(req.query, { status_like: item.status });
+        Object.assign(req.query, { status_like: '' });
         ret.push(item)
       } else if (item.status !== req.query.status_like) {
         delete req.query.status_like
-        Object.assign(req.query, { responsavel_like: item.responsavel });
+        Object.assign(req.query, { responsavel_like: '' });
         ret.push(item)
       } else if (item.responsavel !== req.query.responsavel_like) {
         delete req.query.responsavel_like
-        Object.assign(req.query, { data_like: item.data });
+        Object.assign(req.query, { data_like: '' });
         ret.push(item)
       }
     }
